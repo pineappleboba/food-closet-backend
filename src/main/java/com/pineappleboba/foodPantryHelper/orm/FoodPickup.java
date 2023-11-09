@@ -21,6 +21,5 @@ public class FoodPickup {
     private int ordinalInGroup;
     private int groupSize;
     private String familySize;
-    private String pantryBag;
     private String foodItemNames;
 }

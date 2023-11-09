@@ -22,16 +22,27 @@ public class FoodPickupService {
 
     public void createPickup(FoodOrder foodOrder) {
         String chosenFoodItemNames = getNameCsvFromFoodItems(foodOrder.getChosenFoodItems());
+        chosenFoodItemNames = addPantryStapleBag(chosenFoodItemNames, foodOrder.getPantryStapleBagType());
         FoodPickup foodPickup = new FoodPickup(
                 0,
                 foodOrder.getPersonIdentifier(),
                 foodOrder.getOrdinalInGroup(),
                 foodOrder.getGroupSize(),
                 foodOrder.getFamilySize(),
-                foodOrder.getPantryStapleBagType(),
                 chosenFoodItemNames
                 );
         foodPickupRepository.save(foodPickup);
+    }
+
+    private String addPantryStapleBag(String chosenFoodItemNamesCsv, String pantryStapleBagType) {
+        if (null == pantryStapleBagType || pantryStapleBagType.isEmpty()) {
+            return chosenFoodItemNamesCsv;
+        }
+        if (chosenFoodItemNamesCsv.isEmpty()) {
+            return pantryStapleBagType;
+        }
+
+        return pantryStapleBagType + "," + chosenFoodItemNamesCsv;
     }
 
     private String getNameCsvFromFoodItems(List<FoodItem> chosenFoodItems) {
