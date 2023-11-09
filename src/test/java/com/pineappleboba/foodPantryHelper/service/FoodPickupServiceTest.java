@@ -5,6 +5,7 @@ import com.pineappleboba.foodPantryHelper.orm.FoodItem;
 import com.pineappleboba.foodPantryHelper.orm.FoodPickup;
 import com.pineappleboba.foodPantryHelper.orm.FoodPickupRepository;
 import org.assertj.core.util.Lists;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -18,10 +19,16 @@ class FoodPickupServiceTest {
 
     @Mock
     FoodPickupRepository mockFoodPickupRepository;
+    private AutoCloseable closeable;
 
     @BeforeEach
     public void setup() {
-        MockitoAnnotations.openMocks(this);
+        closeable = MockitoAnnotations.openMocks(this);
+    }
+
+    @AfterEach
+    public void shutdown() throws Exception {
+        closeable.close();
     }
 
     @Test
