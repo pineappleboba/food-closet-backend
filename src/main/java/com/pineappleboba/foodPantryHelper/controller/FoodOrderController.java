@@ -28,8 +28,8 @@ public class FoodOrderController {
 
     @GetMapping(value = "/foodchoices")
     @ResponseBody
-    public List<FoodChoice> getFoodChoices(@RequestParam int numberInFamily) {
-        return foodChoiceService.getFoodChoices(numberInFamily);
+    public List<FoodChoice> getFoodChoices() {
+        return foodChoiceService.getFoodChoices();
     }
 
     @PostMapping(value="/submitOrder")

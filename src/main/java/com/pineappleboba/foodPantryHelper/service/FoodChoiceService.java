@@ -10,12 +10,9 @@ import org.springframework.stereotype.Service;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 @Service
 public class FoodChoiceService {
-    protected static final int LARGE_FAMILY_MINIMUM = 5;
     private final FoodChoiceRepository foodChoiceRepository;
     private final FoodItemRepository foodItemRepository;
 
@@ -24,22 +21,8 @@ public class FoodChoiceService {
         this.foodItemRepository = foodItemRepository;
     }
 
-    public List<FoodChoice> getFoodChoices(int numberInFamily) {
-        if (numberInFamily >= LARGE_FAMILY_MINIMUM) {
-            Predicate<FoodItem> predicate = item -> item.getLargeFamilyQuantity() > 0 && item.getQuantityAvailable() > 0;
-            return getAndFilterFoodChoices(predicate);
-        } else {
-            Predicate<FoodItem> predicate = item -> item.getSmallFamilyQuantity() > 0 && item.getQuantityAvailable() > 0;
-            return getAndFilterFoodChoices(predicate);
-        }
-    }
-
-    private List<FoodChoice> getAndFilterFoodChoices(Predicate<FoodItem> predicate) {
-        List<FoodChoice> foodChoices = foodChoiceRepository.findAll();
-        foodChoices.forEach(choice -> choice.setFoodItemsInChoice(
-                choice.getFoodItemsInChoice().stream().filter(predicate).collect(Collectors.toList())
-        ));
-        return foodChoices.stream().filter(choice -> !choice.getFoodItemsInChoice().isEmpty()).collect(Collectors.toList());
+    public List<FoodChoice> getFoodChoices() {
+        return foodChoiceRepository.findAll();
     }
 
     public void updateQuantities(FoodOrder foodOrder) {
