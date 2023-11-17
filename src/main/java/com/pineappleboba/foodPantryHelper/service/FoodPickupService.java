@@ -39,10 +39,10 @@ public class FoodPickupService {
             return chosenFoodItemNamesCsv;
         }
         if (chosenFoodItemNamesCsv.isEmpty()) {
-            return pantryStapleBagType;
+            return pantryStapleBagType + " bag";
         }
 
-        return pantryStapleBagType + "," + chosenFoodItemNamesCsv;
+        return pantryStapleBagType + " bag," + chosenFoodItemNamesCsv;
     }
 
     private String getNameCsvFromFoodItems(List<FoodItem> chosenFoodItems) {

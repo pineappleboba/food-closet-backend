@@ -39,7 +39,7 @@ class FoodPickupServiceTest {
     void foodOrderToFoodPickup_success() {
         List<FoodItem> foodItems = List.of(new FoodItem(1,1,"item1",0,0,0));
         FoodOrder foodOrder = new FoodOrder("personIdentifier", 19, 19, "s", "pantryBag", foodItems);
-        FoodPickup expected = new FoodPickup(0, "personIdentifier", 19, 19, "s", "pantryBag,item1");
+        FoodPickup expected = new FoodPickup(0, "personIdentifier", 19, 19, "s", "pantryBag bag,item1");
         FoodPickupService test = new FoodPickupService(mockFoodPickupRepository);
 
         // when
@@ -57,7 +57,7 @@ class FoodPickupServiceTest {
                 new FoodItem(1,1,"two",0,0,0),
                 new FoodItem(1,1,"three",0,0,0));
         FoodOrder foodOrder = new FoodOrder("personIdentifier", 19, 19, "s", "pantryBag", foodItems);
-        FoodPickup expected = new FoodPickup(0, "personIdentifier", 19, 19, "s", "pantryBag,one,two,three");
+        FoodPickup expected = new FoodPickup(0, "personIdentifier", 19, 19, "s", "pantryBag bag,one,two,three");
         FoodPickupService test = new FoodPickupService(mockFoodPickupRepository);
 
         // when
@@ -87,7 +87,7 @@ class FoodPickupServiceTest {
     @Test
     void foodOrderToFoodPickup_justABagPlease() {
         FoodOrder foodOrder = new FoodOrder("personIdentifier", 19, 19, "s", "pantryBag", Lists.newArrayList());
-        FoodPickup expected = new FoodPickup(0, "personIdentifier", 19, 19, "s", "pantryBag");
+        FoodPickup expected = new FoodPickup(0, "personIdentifier", 19, 19, "s", "pantryBag bag");
         FoodPickupService test = new FoodPickupService(mockFoodPickupRepository);
 
         // when
