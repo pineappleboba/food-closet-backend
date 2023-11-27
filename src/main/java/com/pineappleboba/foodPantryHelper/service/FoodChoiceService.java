@@ -1,6 +1,7 @@
 package com.pineappleboba.foodPantryHelper.service;
 
 import com.pineappleboba.foodPantryHelper.model.FoodOrder;
+import com.pineappleboba.foodPantryHelper.model.FoodOrderItem;
 import com.pineappleboba.foodPantryHelper.orm.FoodChoice;
 import com.pineappleboba.foodPantryHelper.orm.FoodChoiceRepository;
 import com.pineappleboba.foodPantryHelper.orm.FoodItem;
@@ -27,9 +28,9 @@ public class FoodChoiceService {
 
     public void updateQuantities(FoodOrder foodOrder) {
         // todo: database locking between retrieving the foodItem and updating its quantity
-        for(Iterator<FoodItem> foodItemIterator = foodOrder.getChosenFoodItems().iterator(); foodItemIterator.hasNext();) {
-            FoodItem foodItem = foodItemIterator.next();
-            Optional<FoodItem> savedFoodItem = foodItemRepository.findById(foodItem.getId());
+        for(Iterator<FoodOrderItem> foodItemIterator = foodOrder.getChosenFoodItems().iterator(); foodItemIterator.hasNext();) {
+            FoodOrderItem foodItem = foodItemIterator.next();
+            Optional<FoodItem> savedFoodItem = foodItemRepository.findById(foodItem.getItem().getId());
             if (savedFoodItem.isEmpty()) {
                 // log an error
             } else {
@@ -39,7 +40,7 @@ public class FoodChoiceService {
                         savedFoodItem.get().getName(),
                         savedFoodItem.get().getLargeFamilyQuantity(),
                         savedFoodItem.get().getSmallFamilyQuantity(),
-                        savedFoodItem.get().getQuantityAvailable()-1
+                        savedFoodItem.get().getQuantityAvailable() - foodItem.getQuantityOrdered()
                 );
                 foodItemRepository.save(foodItemWithUpdatedQuantity);
             }

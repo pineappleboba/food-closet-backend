@@ -1,6 +1,7 @@
 package com.pineappleboba.foodPantryHelper.service;
 
 import com.pineappleboba.foodPantryHelper.model.FoodOrder;
+import com.pineappleboba.foodPantryHelper.model.FoodOrderItem;
 import com.pineappleboba.foodPantryHelper.orm.FoodItem;
 import com.pineappleboba.foodPantryHelper.orm.FoodPickup;
 import com.pineappleboba.foodPantryHelper.orm.FoodPickupRepository;
@@ -37,9 +38,9 @@ class FoodPickupServiceTest {
 
     @Test
     void foodOrderToFoodPickup_success() {
-        List<FoodItem> foodItems = List.of(new FoodItem(1,1,"item1",0,0,0));
+        List<FoodOrderItem> foodItems = List.of(new FoodOrderItem(new FoodItem(1,1,"item1",0,0,0), 1));
         FoodOrder foodOrder = new FoodOrder("personIdentifier", 19, 19, "s", "pantryBag", foodItems);
-        FoodPickup expected = new FoodPickup(0, "personIdentifier", 19, 19, "s", "pantryBag bag,item1");
+        FoodPickup expected = new FoodPickup(0, "personIdentifier", 19, 19, "s", "pantryBag bag,(1) item1");
         FoodPickupService test = new FoodPickupService(mockFoodPickupRepository);
 
         // when
@@ -52,12 +53,12 @@ class FoodPickupServiceTest {
     // verify that multiple food items are correctly turned into a CSV style string
     @Test
     void foodOrderToFoodPickup_multipleFoodItems() {
-        List<FoodItem> foodItems = List.of(
-                new FoodItem(1,1,"one",0,0,0),
-                new FoodItem(1,1,"two",0,0,0),
-                new FoodItem(1,1,"three",0,0,0));
+        List<FoodOrderItem> foodItems = List.of(
+                new FoodOrderItem(new FoodItem(1,1,"one",0,0,0), 1),
+                new FoodOrderItem(new FoodItem(1,1,"two",0,0,0), 2),
+                new FoodOrderItem(new FoodItem(1,1,"three",0,0,0), 1));
         FoodOrder foodOrder = new FoodOrder("personIdentifier", 19, 19, "s", "pantryBag", foodItems);
-        FoodPickup expected = new FoodPickup(0, "personIdentifier", 19, 19, "s", "pantryBag bag,one,two,three");
+        FoodPickup expected = new FoodPickup(0, "personIdentifier", 19, 19, "s", "pantryBag bag,(1) one,(2) two,(1) three");
         FoodPickupService test = new FoodPickupService(mockFoodPickupRepository);
 
         // when
@@ -70,10 +71,10 @@ class FoodPickupServiceTest {
     // check that the choice of no pantryBag is handled correctly in the foodItems string
     @Test
     void foodOrderToFoodPickup_noPantryBag() {
-        List<FoodItem> foodItems = List.of(
-                new FoodItem(1,1,"foodItem",0,0,0));
+        List<FoodOrderItem> foodItems = List.of(
+                new FoodOrderItem(new FoodItem(1,1,"foodItem",0,0,0), 1));
         FoodOrder foodOrder = new FoodOrder("personIdentifier", 19, 19, "s", null, foodItems);
-        FoodPickup expected = new FoodPickup(0, "personIdentifier", 19, 19, "s", "foodItem");
+        FoodPickup expected = new FoodPickup(0, "personIdentifier", 19, 19, "s", "(1) foodItem");
         FoodPickupService test = new FoodPickupService(mockFoodPickupRepository);
 
         // when

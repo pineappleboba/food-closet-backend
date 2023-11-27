@@ -1,6 +1,5 @@
 package com.pineappleboba.foodPantryHelper.model;
 
-import com.pineappleboba.foodPantryHelper.orm.FoodItem;
 import lombok.Value;
 
 import java.util.List;
@@ -14,5 +13,5 @@ public class FoodOrder {
     int groupSize;
     String familySize;
     String pantryStapleBagType;
-    List<FoodItem> chosenFoodItems;
+    List<FoodOrderItem> chosenFoodItems;
 }
