@@ -2,7 +2,6 @@ package com.pineappleboba.foodPantryHelper.service;
 
 import com.pineappleboba.foodPantryHelper.model.FoodOrder;
 import com.pineappleboba.foodPantryHelper.model.FoodOrderItem;
-import com.pineappleboba.foodPantryHelper.orm.FoodItem;
 import com.pineappleboba.foodPantryHelper.orm.FoodPickup;
 import com.pineappleboba.foodPantryHelper.orm.FoodPickupRepository;
 import org.springframework.stereotype.Service;
@@ -51,5 +50,9 @@ public class FoodPickupService {
         return chosenFoodItems.stream()
                 .map((item -> "(%d) %s".formatted(item.getQuantityOrdered(),item.getItem().getName())))
                 .reduce((a,b) -> a + "," + b).orElse("");
+    }
+
+    public void deleteFoodPickup(Integer pickupId) {
+        foodPickupRepository.deleteById(pickupId);
     }
 }
