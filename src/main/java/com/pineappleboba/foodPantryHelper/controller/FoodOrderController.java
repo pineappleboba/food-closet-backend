@@ -11,7 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/")
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = {"http://localhost:4200","https://food-closet-backend-30f7cad0cb5e.herokuapp.com"})
 public class FoodOrderController {
     private final FoodChoiceService foodChoiceService;
     private final FoodPickupService foodPickupService;
@@ -40,4 +40,9 @@ public class FoodOrderController {
     }
 
     // deleteFoodPickup param pickupId
+    @DeleteMapping(value="/foodpickup")
+    public void deleteFoodPickup(@RequestParam Integer pickupId) {
+        System.out.println("inside delete");
+        foodPickupService.deleteFoodPickup(pickupId);
+    }
 }
