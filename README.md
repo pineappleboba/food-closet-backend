@@ -11,3 +11,11 @@ To mitigate this confusion, the terms used here are
 curl http://localhost:8080/foodpickups
 curl http://localhost:8080/foodchoices?numberInFamily=4
 curl -XPOST http://localhost:8080/submitOrder --data ''
+
+# Managing your secrets
+Store the database user and password in a profile-specific properties file in the deployed WAR as
+application-dev.properties:
+DB_USER=user-name-goes-here
+DB_PASSWORD=password-goes-here
+
+run the application with the flag '--spring.profiles.active=dev' or whatever your profile is
