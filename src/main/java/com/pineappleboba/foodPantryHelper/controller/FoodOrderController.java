@@ -33,6 +33,11 @@ public class FoodOrderController {
         return foodChoiceService.getFoodChoices();
     }
 
+    @PostMapping(value="/foodchoices")
+    public void setFoodChoices(@RequestBody List<FoodChoice> foodChoices) {
+        foodChoiceService.setFoodChoices(foodChoices);
+    }
+
     @PostMapping(value="/submitOrder")
     public void submitOrder(@RequestBody FoodOrder foodOrder) {
         foodPickupService.createPickup(foodOrder);

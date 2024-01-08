@@ -26,6 +26,11 @@ public class FoodChoiceService {
         return foodChoiceRepository.findAll();
     }
 
+    public void setFoodChoices(List<FoodChoice> foodChoices) {
+        foodChoiceRepository.deleteAll();
+        foodChoiceRepository.saveAll(foodChoices);
+    }
+
     public void updateQuantities(FoodOrder foodOrder) {
         // todo: database locking between retrieving the foodItem and updating its quantity
         for(Iterator<FoodOrderItem> foodItemIterator = foodOrder.getChosenFoodItems().iterator(); foodItemIterator.hasNext();) {
